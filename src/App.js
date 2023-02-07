@@ -22,7 +22,7 @@ const increaseGod = () => {
   setCounterGod(counterGood + 1 )
   setCounterAll(counterAll + 1)
   setCounterAverage(counterAverage+1)
-  setPositivePourcentage(counterPositivePourcentage + counterGood/counterAll)
+  setPositivePourcentage(counterPositivePourcentage + (counterGood/counterAll) *100)
 };
 const increaseNeutral = () => {
   setCounterNeutral(counterNeutral + 1)
@@ -83,7 +83,8 @@ const DisplayBouttons =  () => {
     <div>
     <DisplayTitle />
     <DisplayBouttons />
-    <DisplayStates />
+    {counterAll >= 1 && <DisplayStates />}
+  
     </div>
   )
 }
