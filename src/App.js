@@ -61,11 +61,22 @@ const DisplayStates= () => {
   return (
     <div>
     <h1>Statistics</h1>
+
+    <table>
+    <tr>
     <StatisticLine text="good" value={counterGood}/>
-    <StatisticLine text="neutral" value={counterNeutral}/>
+    </tr>
+    <tr>
     <StatisticLine text="bad" value={counterBad}/>
+    </tr>
+    <tr>
     <StatisticLine text="all" value={counterAll}/>
+    </tr>
+    <tr>
     <StatisticLine text="Avarage" value={counterAverage}/>
+    </tr>
+  
+    </table>
     </div>
   )
   }
