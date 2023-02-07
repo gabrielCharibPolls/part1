@@ -1,116 +1,35 @@
 import { useState } from 'react'
 
 const App = () => {
+  const anecdotes = [
+    'If it hurts, do it more often.',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.'
+  ]
+   
+  const [randomNumber, setRandomNumber] = useState(0)
 
-  /////////////////////////////////////////////////////
-  //variables pour compter les clique dans les buttons 
-  /////////////////////////////////////////////////////
+  /////////////////////////////
+  //genere un nombre aleatoire 
+  // entre 0 à 6
+  ////////////////////////////
 
-  const [ counterGood, setCounterGod ] = useState(0)
-  const [ counterNeutral, setCounterNeutral] = useState(0)
-  const [ counterBad, setCounterBad ] = useState(0)
-  const [ counterAll, setCounterAll ] = useState(0)
-  const [ counterAverage, setCounterAverage ] = useState(0)
-  const [ counterPositivePourcentage, setPositivePourcentage] = useState(0)
+  const generateRandomNumber = () => {
+    setRandomNumber(Math.floor(Math.random() * 7));
+  };
 
-///////////////////////////////////////////////////
-//methode compteur + setteur pour canger variable 
-////////////////////////////////////////////////////
-
-
-const increaseGod = () => {
-  setCounterGod(counterGood + 1 )
-  setCounterAll(counterAll + 1)
-  setCounterAverage(counterAverage+1)
-  setPositivePourcentage(counterPositivePourcentage + (counterGood/counterAll) *100)
-};
-const increaseNeutral = () => {
-  setCounterNeutral(counterNeutral + 1)
-  setCounterAll(counterAll + 1)
-
-};
-const increaseBad = () => {
-  setCounterBad(counterBad + 1)
-  setCounterAll(counterAll + 1)
-  setCounterAverage(counterAverage-1)
-};
-
-/////////////////////////////////////////
-//composant titre 
-////////////////////////////////////
-const DisplayTitle= () => {
-return (
-  <h1>Give FeedBack</h1>
-)
-}
-//////////////////////////////////////////////////////////////////////
-//composant statistiques line pour aficher juste une seul statistique 
-/////////////////////////////////////////////////////////////////////
-const StatisticLine = (props) => {
-  return(
-    <p>{props.text}:{props.value}</p>
-  )
-
-} 
-
-
-/////////////////////////////////////////
-//composant statistiques 
-////////////////////////////////////
-const DisplayStates= () => {
   return (
     <div>
-    <h1>Statistics</h1>
-
-    <table>
-    <tr>
-    <StatisticLine text="good" value={counterGood}/>
-    </tr>
-    <tr>
-    <StatisticLine text="bad" value={counterBad}/>
-    </tr>
-    <tr>
-    <StatisticLine text="all" value={counterAll}/>
-    </tr>
-    <tr>
-    <StatisticLine text="Avarage" value={counterAverage}/>
-    </tr>
-  
-    </table>
-    </div>
-  )
-  }
-
-
-///////////////////////////////////////
-///composant des 3  butons 
-//////////////////////////////////////
-
-const DisplayBouttons =  () => {
-  return (
-    <div>
-    <button onClick={increaseGod}> 
-    good 
-  </button>
-     <button onClick={increaseNeutral}> 
-     neutral
+      {anecdotes[randomNumber]}
+      <p></p>
+      <button onClick={generateRandomNumber}> 
+     next anecdotes 
    </button>
-   <button onClick={increaseBad}> 
-     Bad
-   </button>
-   </div>
-  )
-}
-  return (
-    <div>
-    <DisplayTitle />
-    <DisplayBouttons />
-    {
-    counterAll >= 1 
-    && 
-    <DisplayStates />
-    }
-  
+   <p>{randomNumber}</p>
     </div>
   )
 }
