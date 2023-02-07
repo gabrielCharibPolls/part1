@@ -43,6 +43,17 @@ return (
   <h1>Give FeedBack</h1>
 )
 }
+//////////////////////////////////////////////////////////////////////
+//composant statistiques line pour aficher juste une seul statistique 
+/////////////////////////////////////////////////////////////////////
+const StatisticLine = (props) => {
+  return(
+    <p>{props.text}:{props.value}</p>
+  )
+
+} 
+
+
 /////////////////////////////////////////
 //composant statistiques 
 ////////////////////////////////////
@@ -50,11 +61,11 @@ const DisplayStates= () => {
   return (
     <div>
     <h1>Statistics</h1>
-    <p>good : {counterGood}</p>
-    <p>neutral : {counterNeutral}</p>
-    <p>bad : {counterBad}</p>
-    <p>all : {counterAll}</p>
-    <p>Avarage  : {counterAverage}</p>
+    <StatisticLine text="good" value={counterGood}/>
+    <StatisticLine text="neutral" value={counterNeutral}/>
+    <StatisticLine text="bad" value={counterBad}/>
+    <StatisticLine text="all" value={counterAll}/>
+    <StatisticLine text="Avarage" value={counterAverage}/>
     </div>
   )
   }
@@ -83,7 +94,11 @@ const DisplayBouttons =  () => {
     <div>
     <DisplayTitle />
     <DisplayBouttons />
-    {counterAll >= 1 && <DisplayStates />}
+    {
+    counterAll >= 1 
+    && 
+    <DisplayStates />
+    }
   
     </div>
   )
