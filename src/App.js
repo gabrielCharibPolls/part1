@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
 const App = () => {
+  const [elements, setElements] = { 0: 1, 1: 3, 2: 4, 3: 2 };
+
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -10,6 +12,25 @@ const App = () => {
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.'
   ]
+/////////////////////////////////////////////////////////////
+//methode qui va incrementer de 1 à un incide d'un tableau 
+//////////////////////////////////////////////////////////////
+  const like = (index) => {
+    const updatedElements = [elements];
+    updatedElements[index] += 1 
+    setElements(updatedElements);
+  };
+
+
+  //////////////////////////////////////////////////////////////////////
+ //composant qui afficher les nombre des votre que une anecdote à eu 
+ /////////////////////////////////////////////////////////////////////
+ const nombrerOfLikes = (props) => {
+  return(
+    <p> has {props.number} votes</p>
+  )
+
+}
    
   const [randomNumber, setRandomNumber] = useState(0)
 
@@ -25,10 +46,13 @@ const App = () => {
   return (
     <div>
       {anecdotes[randomNumber]}
-      <p></p>
+      <nombrerOfLikes  number={randomNumber}/>
+      <button onClick={() => like(randomNumber,)}> 
+     vote
+      </button>
       <button onClick={generateRandomNumber}> 
      next anecdotes 
-   </button>
+      </button>
    <p>{randomNumber}</p>
     </div>
   )
