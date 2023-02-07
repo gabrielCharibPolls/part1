@@ -1,35 +1,75 @@
 import { useState } from 'react'
 
 const App = () => {
-  const [ counter, setCounter ] = useState(0)
 
-///////////////////////////////
-//methode compteur + 1
-//////////////////////////////
-const increaseByOne = () => setCounter(counter + 1 )
-const decreaseByOne = () => setCounter(counter - 1)
-const setToZero = () => setCounter(0)
+  /////////////////////////////////////////////////////
+  //variables pout compter les clique dans les buttons 
+  /////////////////////////////////////////////////////
+
+  const [ counterGood, setCounterGod ] = useState(0)
+  const [ counterNeutral, setCounterNeutral] = useState(0)
+  const [ counterBad, setCounterBad ] = useState(0)
+
+///////////////////////////////////////////////////
+//methode compteur + setteur pour canger variable 
+////////////////////////////////////////////////////
+
+
+const increaseGod = () => setCounterGod(counterGood + 1 )
+const increaseNeutral = () => setCounterNeutral(counterNeutral + 1)
+const increaseBad = () => setCounterBad(counterBad + 1)
 
 /////////////////////////////////////////
-//methode qui affiche le compteur 
+//composant titre 
 ////////////////////////////////////
-const Display = (props) => {
+const DisplayTitle= () => {
 return (
-  <div>{props.counter}</div>
+  <h1>Give FeedBack</h1>
 )
+}
 
+/////////////////////////////////////////
+//composant statistiques 
+////////////////////////////////////
+const DisplayStates= () => {
+  return (
+    <div>
+    <h1>Statistics</h1>
+    <p>good : {counterGood}</p>
+    <p>neutral : {counterNeutral}</p>
+    <p>bad : {counterBad}</p>
+    </div>
+  )
+  }
+
+
+///////////////////////////////////////
+///composant des 3  butons 
+//////////////////////////////////////
+
+const DisplayBouttons =  () => {
+  return (
+    <div>
+    <button onClick={increaseGod}> 
+    good 
+  </button>
+     <button onClick={increaseNeutral}> 
+     neutral
+   </button>
+   <button onClick={increaseBad}> 
+     Bad
+   </button>
+   </div>
+  )
 }
   return (
     <div>
 
-    <Display counter={counter} />
-    <button onClick={increaseByOne}> 
-  plus
-</button>
-    <button onClick={setToZero}> 
-        zero
-      </button>
-
+    <DisplayTitle />
+    <DisplayBouttons />
+    <DisplayStates />
+    
+      
     </div>
   )
 }
