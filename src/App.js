@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState ,useEffect } from 'react'
 const App = () => {
 
   const [ counterOfAllCours, setCounterOfAllCours ] = useState(0)
@@ -24,6 +24,11 @@ const App = () => {
       }
     ]
   }
+
+  useEffect(() => {
+    const total = course.parts.reduce((acc, num) => acc + num, 0);
+    setCounterOfAllCours(total);
+  });
 
   const Cours = (props) => {
     return(
@@ -57,7 +62,7 @@ const App = () => {
   
     return(
       <div>
-      <p> Total of exercises {total}</p>
+      <p> Total of exercises {counterOfAllCours}</p>
       </div>
     )
   }
