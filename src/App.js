@@ -1,37 +1,51 @@
 import React, { useState } from 'react';
 
-const App = () => {
-  const [contacts, setContacts] = useState([
-    { name: 'test', number: '123' },
-    { name: 'test', number: '123' },
-  ]);
+const TaskForm = () => {
+  const [tasks, setTasks] = useState([]);
+  const [taskName, setTaskName] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
 
-  const addContact = () => {
-    setContacts([...contacts, { name: 'gabriel', number: 'charib' }]);
+  const handleSubmit = event => {
+    event.preventDefault();
+    setTasks([...tasks, { taskName, taskDescription }]);
+    setTaskName('');
+    setTaskDescription('');
   };
 
   return (
     <div>
-      <h2>Phone Directory</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          {contacts.map((contact, index) => (
-            <tr key={index}>
-              <td>{contact.name}</td>
-              <td>{contact.number}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button onClick={addContact}>Add</button>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Task Name:
+          <input
+            type="text"
+            value={taskName}
+            onChange={e => setTaskName(e.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          Task Description:
+          <input
+            type="text"
+            value={taskDescription}
+            onChange={e => setTaskDescription(e.target.value)}
+          />
+        </label>
+        <br />
+        <button type="submit">Add Task</button>
+      </form>
+      <br />
+      <h3>Task List:</h3>
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>
+            Task Name: {task.taskName} Task Description: {task.taskDescription}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default App
+export default TaskForm;
