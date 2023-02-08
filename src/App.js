@@ -21,9 +21,37 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      
+      {
+        name: 'Redux',
+        exercises: 3,
+        id: 1
+      },
+      {
+        name: 'Middlewares',
+        exercises: 7,
+        id: 2
       }
+      , 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
     ]
   }
+    ]
+}
 
   useEffect(() => {
     const total = course.parts.reduce((acc, num) => acc + num, 0);
@@ -62,7 +90,7 @@ const App = () => {
   
     return(
       <div>
-      <p> Total of exercises {counterOfAllCours}</p>
+      <p> Total of exercises {total}</p>
       </div>
     )
   }
