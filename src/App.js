@@ -5,6 +5,10 @@ const TaskForm = () => {
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
 
+
+  /////////////////////////////////////////////
+  ////les setteurs 
+  /////////////////////////////////////////////
   const handleSubmit = event => {
     event.preventDefault();
     setTasks([...tasks, { taskName, taskDescription }]);
@@ -12,38 +16,78 @@ const TaskForm = () => {
     setTaskDescription('');
   };
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Task Name:
-          <input
+  const DisplayInput= () => {
+    return (
+      <div>
+          <label>
+           Name:
+           </label>
+        <input
             type="text"
             value={taskName}
             onChange={e => setTaskName(e.target.value)}
           />
-        </label>
-        <br />
-        <label>
-          Task Description:
+      </div>
+    )
+    }
+  const DisplayTask= () => {
+    return (
+      <div>
+      <h3>Numbers:</h3>
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>
+            {task.taskName} : {task.taskDescription}
+          </li>
+        ))}
+      </ul>
+      </div>
+    )
+    }
+
+  const DisplayInputPhone= () => {
+    return (
+      <div>
+          <label>
+           Phone:
+          <br />
           <input
             type="text"
             value={taskDescription}
             onChange={e => setTaskDescription(e.target.value)}
           />
         </label>
+      </div>
+    )
+    }
+
+
+    /////////////////////////////////////////////
+    ///compotent qui contient le formulaire 
+    ////////////////////////////////////////////
+    const DisplayForms= () => {
+      return (
+        <div>
+          <form onSubmit={handleSubmit}>
+          <DisplayInput />
+          <br />
+        <DisplayInputPhone />
         <br />
-        <button type="submit">Add Task</button>
+        <br />
+        <button type="submit">Add</button>
       </form>
+        </div>
+      )
+      }
+
+
+
+
+  return (
+    <div>
+      <DisplayForms />
       <br />
-      <h3>Task List:</h3>
-      <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>
-            Task Name: {task.taskName} Task Description: {task.taskDescription}
-          </li>
-        ))}
-      </ul>
+      <DisplayTask />
     </div>
   );
 };
