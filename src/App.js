@@ -1,9 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
+
+import axios from 'axios';
 
 const App = () => {
   const [phone, setPhone] = useState([]);
   const [Name, setName] = useState('');
+  const [notes, setNotes] = useState([])
   const [taskDescription, setTaskDescription] = useState('');
+
+ /////////////////////////////////////////////////////////////
+ //stoque les pays 
+ ///////////////////////////////////////////////////////////
+  const [countries, setCountries] = useState([]);
+
+
+    useEffect(() => {
+      axios.get('https://restcountries.com/v2/all')
+        .then(response => {
+          setCountries(response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }, []);
+
+
+
+  useEffect(() => {
+    axios.get('/data.json')
+      .then(response => {
+        setNotes(response.setNotes);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
+
+
+  console.log('render', notes.length, 'notes')
 
 
   /////////////////////////////////////////////
@@ -112,6 +147,12 @@ const App = () => {
       <br />
       <DisplayInputSearch />
       <DisplayPhone />
+
+      <ul>
+      {countries.map(country => (
+        <li key={country.alpha3Code}>{country.name}</li>
+      ))}
+    </ul>
     </div>
   );
 };
