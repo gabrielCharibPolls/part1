@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const TaskForm = () => {
-  const [tasks, setTasks] = useState([]);
-  const [taskName, setTaskName] = useState('');
+const App = () => {
+  const [phone, setPhone] = useState([]);
+  const [Name, setName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
 
 
@@ -11,8 +11,8 @@ const TaskForm = () => {
   /////////////////////////////////////////////
   const handleSubmit = event => {
     event.preventDefault();
-    setTasks([...tasks, { taskName, taskDescription }]);
-    setTaskName('');
+    setPhone([...phone, { Name, taskDescription }]);
+    setName('');
     setTaskDescription('');
   };
 
@@ -24,26 +24,35 @@ const TaskForm = () => {
            </label>
         <input
             type="text"
-            value={taskName}
-            onChange={e => setTaskName(e.target.value)}
+            value={Name}
+            onChange={e => setName(e.target.value)}
           />
       </div>
     )
     }
-  const DisplayTask= () => {
+  const DisplayPhone= () => {
     return (
       <div>
       <h3>Numbers:</h3>
       <ul>
-        {tasks.map((task, index) => (
+        {phone.map((phone, index) => (
           <li key={index}>
-            {task.taskName} : {task.taskDescription}
+            {phone.Name} : {phone.taskDescription}
           </li>
         ))}
       </ul>
       </div>
     )
     }
+
+
+    ////////////////////////////////////////////////////////////////
+    ///methode de filtrage  
+    ///////////////////////////////////////////////////////////////
+    const filteredName = phone.filter(phone => {
+      return phone.Name.toLowerCase().includes(Name.toLowerCase());
+    });
+
 
   const DisplayInputPhone= () => {
     return (
@@ -60,6 +69,23 @@ const TaskForm = () => {
       </div>
     )
     }
+
+
+    ////////////////////////////////////////////////////////////////
+    ///compotent qui contient le formulaire pour le filtrage 
+    ///////////////////////////////////////////////////////////////
+    const DisplayInputSearch = () => {
+      return (
+        <div>  
+      <input
+        type="text"
+        placeholder="Search a phone number"
+        value={phone}
+        onChange={filteredName}
+      />
+        </div>
+      )
+      }
 
 
     /////////////////////////////////////////////
@@ -80,16 +106,14 @@ const TaskForm = () => {
       )
       }
 
-
-
-
   return (
     <div>
       <DisplayForms />
       <br />
-      <DisplayTask />
+      <DisplayInputSearch />
+      <DisplayPhone />
     </div>
   );
 };
 
-export default TaskForm;
+export default App;
