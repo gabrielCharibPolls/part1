@@ -6,38 +6,24 @@ const App = () => {
   const [Name, setName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
 
-  
+
+
+  /////////////////////////////////////////////
+  ////comunique avec le back-ad 
+  /////////////////////////////////////////////
   const handleSubmit = async event => {
     event.preventDefault();
     const data = { Name, taskDescription };
 
-  /////////////////////////////////////////////
-  ////les setteurs 
-  /////////////////////////////////////////////
- 
-
-  const handleSubmit = event => {
-    event.preventDefault();
-    axios.post('http://localhost:3000/api/phones', phone)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    try {
+      await axios.post('db.json', data);
+      setPhone([...phone, data]);
+      setName('');
+      setTaskDescription('');
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-
-
-  try {
-    await axios.post('db.json', data);
-    setPhone([...phone, data]);
-    setName('');
-    setTaskDescription('');
-  } catch (error) {
-    console.error(error);
-  }
-};
 
   const DisplayInput= () => {
     return (
@@ -97,19 +83,19 @@ const App = () => {
     ////////////////////////////////////////////////////////////////
     ///compotent qui contient le formulaire pour le filtrage 
     ///////////////////////////////////////////////////////////////
+  
     const DisplayInputSearch = () => {
       return (
-        <div>  
-      <input
-        type="text"
-        placeholder="Search a phone number"
-        value={phone}
-        onChange={filteredName}
-      />
+        <div>
+          <input
+            type="text"
+            placeholder="Search a phone number"
+            value={Name}
+            onChange={e => setName(e.target.value)}
+          />
         </div>
-      )
-      }
-
+      );
+    };
 
     /////////////////////////////////////////////
     ///compotent qui contient le formulaire 
