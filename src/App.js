@@ -33,9 +33,6 @@ function App() {
         </div>
       )
       }
-
-
-
   ////////////////////////////////////////////////////////////////
   ///compotent qui contient  affiche le pays forme de liste
   ///////////////////////////////////////////////////////////////
@@ -51,7 +48,21 @@ function App() {
       )
       }
 
+      /////////////////////////////////////////
+      ////affichier les detailes d'un pays 
+      ///capital - superficie -image du drapeux 
+      /////////////////////////////////////////////
 
+      function CountryDetails({ country }) {
+        return (
+          <div>
+            <h2>{country.name}</h2>
+            <p>Capital: {country.capital}</p>
+            <p>Area: {country.area} km<sup>2</sup></p>
+            <img src={country.flag} alt={`Flag of ${country.name}`}/>
+            </div>
+            )
+          }
 
   //////////////////////////////////////////////////////////////////
   // Filtre les pays en fonction de la requête de recherche
@@ -59,13 +70,14 @@ function App() {
   const filteredCountries = countries.filter(country =>
     country.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   return (
     <div>
       <DisplayInput />
       {filteredCountries.length > 10 ? (
         <p>Please specify your search query</p>
-      ) : (
+        ) : filteredCountries.length === 1 ? (
+          <CountryDetails country={filteredCountries[0]} />
+        ) : (
         <DisplayGet />
       )}
     </div>
