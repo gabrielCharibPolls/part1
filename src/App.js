@@ -25,20 +25,20 @@ const App = () => {
     }
   };
 
-  const DisplayInput= () => {
+  const DisplayInput = () => {
     return (
       <div>
-          <label>
-           Name:
-           </label>
+        <label>
+          Name:
+        </label>
         <input
-            type="text"
-            value={Name}
-            onChange={e => setName(e.target.value)}
-          />
+          type="text"
+          value={Name}
+          onChange={e => setName(e.target.value)}
+        />
       </div>
-    )
-    }
+    );
+  };
   const DisplayPhone= () => {
     return (
       <div>
@@ -96,6 +96,15 @@ const App = () => {
         </div>
       );
     };
+
+    const handleDelete = index => {
+      const confirmDelete = window.confirm(Are you sure you want to delete ${phone[index].Name});
+      if (confirmDelete) {
+      setPhone(phone.filter((phone, i) => i !== index));
+      }
+      };
+      
+      
 
     /////////////////////////////////////////////
     ///compotent qui contient le formulaire 
