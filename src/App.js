@@ -34,14 +34,15 @@ function App() {
       )
       }
   ////////////////////////////////////////////////////////////////
-  ///compotent qui contient  affiche le pays forme de liste
+  ///compotent qui affiche le pays forme de liste
+  /// + un button plus des detailles a ôte de chaque pays 
   ///////////////////////////////////////////////////////////////
      const DisplayGet= () => {
       return (
         <div>  
           <ul>
           {filteredCountries.map(country => (
-            <li key={country.alpha3Code}>{country.name}</li>
+            <li key={country.alpha3Code}>{country.name} { <button onClick={() => this.setState({ selectedCountry: country })}></button>}</li>
           ))}
         </ul>
         </div>
@@ -60,8 +61,15 @@ function App() {
             <p>Capital: {country.capital}</p>
             <p>Area: {country.area} km<sup>2</sup></p>
             <img src={country.flag} alt={`Flag of ${country.name}`}/>
+
             </div>
             )
+          }
+
+
+         function CountryDetails(country) {
+            const { capital, area, flag, languages } = country;
+
           }
 
   //////////////////////////////////////////////////////////////////
