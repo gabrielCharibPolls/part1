@@ -1,160 +1,74 @@
-import React, { useState , useEffect } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const App = () => {
-  const [phone, setPhone] = useState([]);
-  const [Name, setName] = useState('');
-  const [notes, setNotes] = useState([])
-  const [taskDescription, setTaskDescription] = useState('');
+function App() {
 
- /////////////////////////////////////////////////////////////
- //stoque les pays 
- ///////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////
+  //les variables  + setteurs 
+  ////////////////////////////////////////////////////
+
   const [countries, setCountries] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-
-    useEffect(() => {
-      axios.get('https://restcountries.com/v2/all')
-        .then(response => {
-          setCountries(response.data);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }, []);
-
-
-
+  ///////////////////////////////////////////////
+  ///requette de l'api  
+  ///////////////////////////////////////////////
   useEffect(() => {
-    axios.get('/data.json')
+    axios.get('https://restcountries.com/v2/all')
       .then(response => {
-        setNotes(response.setNotes);
+        setCountries(response.data);
       })
       .catch(error => {
         console.error(error);
       });
   }, []);
 
-
-
-  console.log('render', notes.length, 'notes')
-
-
-  /////////////////////////////////////////////
-  ////les setteurs 
-  /////////////////////////////////////////////
-  const handleSubmit = event => {
-    event.preventDefault();
-    setPhone([...phone, { Name, taskDescription }]);
-    setName('');
-    setTaskDescription('');
-  };
-
-  const DisplayInput= () => {
-    return (
-      <div>
-          <label>
-           Name:
-           </label>
-        <input
-            type="text"
-            value={Name}
-            onChange={e => setName(e.target.value)}
-          />
-      </div>
-    )
-    }
-  const DisplayPhone= () => {
-    return (
-      <div>
-      <h3>Numbers:</h3>
-      <ul>
-        {phone.map((phone, index) => (
-          <li key={index}>
-            {phone.Name} : {phone.taskDescription}
-          </li>
-        ))}
-      </ul>
-      </div>
-    )
-    }
-
-
-    ////////////////////////////////////////////////////////////////
-    ///methode de filtrage  
-    ///////////////////////////////////////////////////////////////
-    const filteredName = phone.filter(phone => {
-      return phone.Name.toLowerCase().includes(Name.toLowerCase());
-    });
-
-
-  const DisplayInputPhone= () => {
-    return (
-      <div>
-          <label>
-           Phone:
-          <br />
-          <input
-            type="text"
-            value={taskDescription}
-            onChange={e => setTaskDescription(e.target.value)}
-          />
-        </label>
-      </div>
-    )
-    }
-
-
-    ////////////////////////////////////////////////////////////////
-    ///compotent qui contient le formulaire pour le filtrage 
-    ///////////////////////////////////////////////////////////////
-    const DisplayInputSearch = () => {
+  ////////////////////////////////////////////////////////////////
+  ///compotent qui contient le formulaire pour le filtrage 
+  ///////////////////////////////////////////////////////////////
+     const DisplayInput= () => {
       return (
         <div>  
-      <input
-        type="text"
-        placeholder="Search a phone number"
-        value={phone}
-        onChange={filteredName}
-      />
+          <input type="text" value={searchQuery} onChange={event => setSearchQuery(event.target.value)} />
         </div>
       )
       }
 
 
-    /////////////////////////////////////////////
-    ///compotent qui contient le formulaire 
-    ////////////////////////////////////////////
-    const DisplayForms= () => {
+
+  ////////////////////////////////////////////////////////////////
+  ///compotent qui contient  affiche le pays forme de liste
+  ///////////////////////////////////////////////////////////////
+     const DisplayGet= () => {
       return (
-        <div>
-          <form onSubmit={handleSubmit}>
-          <DisplayInput />
-          <br />
-        <DisplayInputPhone />
-        <br />
-        <br />
-        <button type="submit">Add</button>
-      </form>
+        <div>  
+          <ul>
+          {filteredCountries.map(country => (
+            <li key={country.alpha3Code}>{country.name}</li>
+          ))}
+        </ul>
         </div>
       )
       }
+
+
+
+  //////////////////////////////////////////////////////////////////
+  // Filtre les pays en fonction de la requête de recherche
+  ///////////////////////////////////////////////////////////////
+  const filteredCountries = countries.filter(country =>
+    country.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div>
-      <DisplayForms />
-      <br />
-      <DisplayInputSearch />
-      <DisplayPhone />
-
-      <ul>
-      {countries.map(country => (
-        <li key={country.alpha3Code}>{country.name}</li>
-      ))}
-    </ul>
+      <DisplayInput />
+      {filteredCountries.length > 10 ? (
+        <p>Please specify your search query</p>
+      ) : (
+        <DisplayGet />
+      )}
     </div>
   );
-};
-
-export default App;
+}
+ export default App;
