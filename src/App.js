@@ -6,7 +6,18 @@ const App = () => {
   const [Name, setName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
 
+  const handleClick = () => {
+    const result = window.confirm("Êtes-vous sûr de vouloir continuer ?");
+    setShowConfirm(result);
+  };
 
+  return (
+    <div>
+      <button onClick={handleClick}>Afficher la boîte de dialogue</button>
+      {showConfirm && <p>Vous avez choisi "OK"</p>}
+    </div>
+  );
+}
 
   /////////////////////////////////////////////
   ////comunique avec le back-ad 
@@ -22,6 +33,28 @@ const App = () => {
       setTaskDescription('');
     } catch (error) {
       console.error(error);
+    }
+  };
+
+
+/////////////////////////////////////////////////////////////////
+///methode qui permet de mettre à jour le numero de telephone 
+/////////////////////////////////////////////////////////////////
+
+  const updatePhoneNumber = (id, newPhoneNumber) => {
+    if (window.confirm(`Voulez-vous vraiment mettre à jour le numéro de téléphone de l'utilisateur avec l'ID ${id}?`)) {
+      axios.put(`/api/directory/${id}`, { phoneNumber: newPhoneNumber })
+        .then(response => {
+          setDirectory(prevDirectory => prevDirectory.map(person => {
+            if (person.id === id) {
+              return { ...person, phoneNumber: newPhoneNumber };
+            }
+            return person;
+          }));
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   };
 
@@ -97,14 +130,7 @@ const App = () => {
       );
     };
 
-    const handleDelete = index => {
-      const confirmDelete = window.confirm(Are you sure you want to delete ${phone[index].Name});
-      if (confirmDelete) {
-      setPhone(phone.filter((phone, i) => i !== index));
-      }
-      };
-      
-      
+    
 
     /////////////////////////////////////////////
     ///compotent qui contient le formulaire 
@@ -126,7 +152,7 @@ const App = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={updatePhoneNumber}>
       <DisplayForms />
       <br />
       <DisplayInputSearch />
@@ -136,6 +162,6 @@ const App = () => {
       </form>
     </div>
   );
-};
+
 
 export default App;
