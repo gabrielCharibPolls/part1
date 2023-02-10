@@ -5,6 +5,23 @@ const App = () => {
   const [phone, setPhone] = useState([]);
   const [Name, setName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
+
+  const handleSuccess = () => {
+    setNotificationMessage('Opération réussie !');
+    setShowNotification(true);
+  
+  return (
+    <div>
+      {showNotification && (
+        <SuccessNotification message={notificationMessage} />
+      )}
+      <button onClick={handleSuccess}>Déclencher l'opération réussie</button>
+    </div>
+  );
+};
 
   const handleClick = () => {
     const result = window.confirm("Êtes-vous sûr de vouloir continuer ?");
@@ -18,6 +35,27 @@ const App = () => {
     </div>
   );
 }
+
+//////////////////////////////////////////////////////////////
+///compotent qui contient une notification avec un style  
+////////////////////////////////////////////////////////////
+
+const SuccessNotification = ({ message }) => {
+  const [show, setShow] = useState(true);
+
+  setTimeout(() => {
+    setShow(false);
+  }, 3000);
+
+  return (
+    show && (
+      <div style={{ backgroundColor: 'lightgreen', padding: '10px' }}>
+        {message}
+      </div>
+    )
+  );
+};
+
 
   /////////////////////////////////////////////
   ////comunique avec le back-ad 
@@ -54,6 +92,13 @@ const App = () => {
         })
         .catch(error => {
           console.error(error);
+          setErrorMessage(
+            `Note '${note.content}' was already removed from server`
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+          setNotes(notes.filter(n => n.id !== id))
         });
     }
   };
@@ -153,10 +198,17 @@ const App = () => {
   return (
     <div>
       <form onSubmit={updatePhoneNumber}>
+
+      <Notification message={errorMessage} />
       <DisplayForms />
       <br />
       <DisplayInputSearch />
       <DisplayPhone />
+
+      <li className='note'>
+      {note.content} 
+      <button onClick={toggleImportance}>{label}</button>
+    </li>
 
       <button type="submit">Add</button>
       </form>
